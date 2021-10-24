@@ -36,6 +36,7 @@ void Draw() {
 			cout << relleno; 
 		}
 
+
 	}
 	
 		
