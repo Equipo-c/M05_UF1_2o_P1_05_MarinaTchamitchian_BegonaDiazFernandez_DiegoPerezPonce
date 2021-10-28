@@ -3,6 +3,7 @@
 #include <iostream>
 using namespace std;
 
+//soy Bego
 
 #define CONSOLE_HEIGHT 3
 #define CONSOLE_WIDTH 30
