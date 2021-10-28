@@ -13,23 +13,6 @@ CON LO QUE AVANCEIS VAMOS HABLANDO.
 
 
 
-//ESTS UNA PRUEBA DOS
-//sgsgsa
-//agsag
-
-
-
-
-//Holanova
-
-//hola222
-//hola33
-//hola444
-//hola555
-
-//Confirmando Prueba
-
-
 #include <iostream>
 using namespace std;
 
