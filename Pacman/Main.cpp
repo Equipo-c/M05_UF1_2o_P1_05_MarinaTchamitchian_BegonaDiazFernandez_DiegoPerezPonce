@@ -10,25 +10,15 @@ YO HE CONSEGUIDO QUE EL MAPA REINICIE PULSANDO LA LETRA "a", LO PODEMOS DEJAR AS
 PERO NO CONSIGO QUE EL MAPA QUE YO QUIERO SE DIBUJE EN PANTALLA, ASI QUE EN ESE PUNTO ESTAMOS... 
 CON LO QUE AVANCEIS VAMOS HABLANDO. 
 */
-
-
-
 //ESTS UNA PRUEBA DOS
 //sgsgsa
 //agsag
-
-
-
-
 //Holanova
-
 //hola222
 //hola33
 //hola444
 //hola555
-
 //Confirmando Prueba
-
 
 #include <iostream>
 using namespace std;
