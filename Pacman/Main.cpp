@@ -1,20 +1,3 @@
-/*
-* ESTOS COMENTARIOS SE PUEDEN IR BORRANDO SEGUN VAMOS AVANZANDO, PERO CREO QUE PODRIAN ESTAR BIEN PARA
-* IR TRABAJNDO EL PROYECTO.
- 
-HOLA CHICOS, A VER OS CUENTO 
-ESTAMOS EN LA FASE DE DIBUJAR EL MAPA, SEGUN EL MODELO BASE DE ALBERTO Y LO QUE ME HA PARECIDO ENTENDER DE LA PRACTICA PUEDE SER EL MAPA MAS PEQUEÑO TIPO 10X10
-AUN ASI YO HE COPIADO EL MAPA DE ALBERTO QUE SON 6# + 6 · +6# EN VERTICAL Y 32# +18· +32# EN HORIZONTAL (ESTO LO PODEIS MODIFICAR SI LO PREFERIS)
-
-YO HE CONSEGUIDO QUE EL MAPA REINICIE PULSANDO LA LETRA "a", LO PODEMOS DEJAR ASI, YA QUE MAS TARDE SE REINICIARA AL PULSAR CUALQUIERA DE LOS INPUTS DEL PLAYER
-PERO NO CONSIGO QUE EL MAPA QUE YO QUIERO SE DIBUJE EN PANTALLA, ASI QUE EN ESE PUNTO ESTAMOS... 
-CON LO QUE AVANCEIS VAMOS HABLANDO. 
-*/
-
-
-//ESTO ES UNA PRUEBA
-//fff
-
 
 
 #include <iostream>
@@ -25,23 +8,23 @@ using namespace std;
 #define CONSOLE_WIDTH 30
 //{ 'x' };/*
 char relleno={ 'x' };
-//char relleno[CONSOLE_WIDTH] [CONSOLE_HEIGHT]  { "################################··················################################",
+//char relleno[CONSOLE_WIDTH] [CONSOLE_HEIGHT]  { "################################Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·################################",
 //"#                                                                                #"};
 //"#                                                                                #",
 //"#                                                                                #",
 //"#                                                                                #",
-//"·                                                                                ·",
-//"·                                                                                ·",
-//"·                                                                                ·",
-//"·                                                                                ·",
-//"·                                                                                ·",
-//"·                                                                                ·",
+//"Â·                                                                                Â·",
+//"Â·                                                                                Â·",
+//"Â·                                                                                Â·",
+//"Â·                                                                                Â·",
+//"Â·                                                                                Â·",
+//"Â·                                                                                Â·",
 //"#                                                                                #",
 //"#                                                                                #",
 //"#                                                                                #",
 //"#                                                                                #",
 //"#                                                                                #",
-//"################################··················################################",
+//"################################Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·################################",
 //};*/
 char input = 'a';
 bool run = true;
