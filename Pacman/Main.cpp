@@ -2,13 +2,16 @@
 #include <windows.h>  
 using namespace std;
 
-
 #define CONSOLE_HEIGHT 10
 #define CONSOLE_WIDTH 10
 
-enum USER_INPUT { NONE, UP, DOWN, RIGHT, LEFT, QUIT };
-USER_INPUT input = USER_INPUT::NONE;
+enum MAP_TILES { WALL = '@', EMPTY = ' ', POINT = '.' };
+MAP_TILES mapa[CONSOLE_HEIGHT][CONSOLE_WIDTH];
 
+enum USER_INPUT { NONE, UP, DOWN, RIGHT, LEFT, QUIT };
+char player = 'O';
+//int j = 0;
+USER_INPUT input = USER_INPUT::NONE;
 bool run = true;
 
 int player_x = 5;
@@ -17,32 +20,26 @@ int player_y = 5;
 int mapa_puntos = 0;
 int player_puntos = 0;
 
-//{ 'x' };/*
-char relleno={ 'x' };
-//char relleno[CONSOLE_WIDTH] [CONSOLE_HEIGHT]  { "################################··················################################",
-//"#                                                                                #"};
-//"#                                                                                #",
-//"#                                                                                #",
-//"#                                                                                #",
-//"·                                                                                ·",
-//"·                                                                                ·",
-//"·                                                                                ·",
-//"·                                                                                ·",
-//"·                                                                                ·",
-//"·                                                                                ·",
-//"#                                                                                #",
-//"#                                                                                #",
-//"#                                                                                #",
-//"#                                                                                #",
-//"#                                                                                #",
-//"################################··················################################",
-//};*/
-//char input = 'a';
+void Inicializar() {
+	for (size_t i = 0; i < CONSOLE_HEIGHT; i++)
+	{
+		for (size_t j = 0; j < CONSOLE_WIDTH; j++)
+		{
+			if ((i == 0 || i == CONSOLE_HEIGHT - 1 || j == 0 || j == CONSOLE_WIDTH - 1))
+			{
+				mapa[i][j] = MAP_TILES::WALL;
+			}
+			else if (i == 5 || i == CONSOLE_HEIGHT - 6 || j == 5 || j == CONSOLE_WIDTH - 6) {
+				mapa[i][j] = MAP_TILES::POINT;
+				mapa_puntos++;
+			}
+			else {
+				mapa[i][j] = MAP_TILES::EMPTY;
+			}
 
-
-void Instanziar()
-{}
-// While() {} numero de veces que se repite la consola
+		}
+	}
+}
 void Input() {
 	char tempInput;
 	cin >> tempInput;
@@ -74,7 +71,7 @@ void Input() {
 	}
 }
 
-void Logica() {
+void logic() {
 	int newPos_y = player_y;
 	int newPos_x = player_x;
 	switch (input)
@@ -95,7 +92,7 @@ void Logica() {
 		run = false;
 		break;
 	}
-	/*if (mapa[newPos_y][newPos_x] == MAP_TILES::WALL)
+	if (mapa[newPos_y][newPos_x] == MAP_TILES::WALL)
 	{
 		newPos_y = player_y;
 		newPos_x = player_x;
@@ -105,7 +102,7 @@ void Logica() {
 		player_puntos++;
 		mapa[newPos_y][newPos_x] = MAP_TILES::EMPTY;
 	}
-	 volver al otro lado de la pantalla cuando cruzas un limite
+	/* volver al otro lado de la pantalla cuando cruzas un limite
 	if (newPos_y < 0) {
 		newPos_y = CONSOLE_HEIGHT - 1;
 	}
@@ -114,49 +111,47 @@ void Logica() {
 	}
 	newPos_y %= CONSOLE_HEIGHT;
 	newPos_x %= CONSOLE_WIDTH;*/
-	//Finalizar el juego
-	if (mapa_puntos == 0)
-	{
-		cout << "BIEN HECHO" <<endl;
-		cout << "Pulsa 'Q' para salir" <<endl;
-		system("PAUSE");
-	}
 	player_y = newPos_y;
 	player_x = newPos_x;
+
+	if (mapa_puntos <= 0)
+	{
+		cout << "BIEN HECHO" << endl;
+		cout << "Pulsa 'Q' para salir" << endl;
+		system("PAUSE");
+	}
 }
-
 void Draw() {
-	//limpiar pantalla tras interaccion
-	system("CLS");
-
-	//int i, j; 
-	for (size_t i = 0; i < CONSOLE_WIDTH; i++)
+	system("CLS"); //limpiar la pantalla
+	for (size_t i = 0; i < CONSOLE_HEIGHT; i++)
 	{
 		for (size_t j = 0; j < CONSOLE_WIDTH; j++)
 		{
-			cout << relleno;
+			if (player_x == j && player_y == i) {
+				cout << player;
+			}
+			else {
+
+				cout << (char)mapa[i][j];
+			}
 		}
-
-
+		cout << endl;
 	}
-
-
-	cout << endl;
+	//system("Color DE");
+	cout << "SCORE:" << player_puntos << endl;
+	cout << "LEFT TO COLLECT:" << mapa_puntos << endl;
+	cout << "Movments (w, s, d, a):" << endl;
 }
 
 int main()
 {
-	Instanziar();
-	while (run) {
-
+	Inicializar();
+	while (run)
+	{
 		Input();
-		Logica();
+		logic();
 		Draw();
 	}
 
 
 }
-
-
-
-
