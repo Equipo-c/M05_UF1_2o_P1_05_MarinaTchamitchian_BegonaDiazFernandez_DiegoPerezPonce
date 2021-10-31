@@ -47,8 +47,8 @@ void Inicializar() {
 					mapa[5][9] = MAP_TILES::EMPTY;
 					mapa[0][4] = MAP_TILES::EMPTY;
 					mapa[0][5] = MAP_TILES::EMPTY;
-					mapa[9][4] = MAP_TILES::EMPTY;
-					mapa[9][5] = MAP_TILES::EMPTY;
+					mapa[10][4] = MAP_TILES::EMPTY;
+					mapa[10][5] = MAP_TILES::EMPTY;
 					
 
 				}
@@ -119,7 +119,7 @@ void logic() {
 		player_puntos++;
 		mapa[newPos_y][newPos_x] = MAP_TILES::EMPTY;
 	}
-	/* volver al otro lado de la pantalla cuando cruzas un limite
+	// volver al otro lado de la pantalla cuando cruzas un limite
 	if (newPos_y < 0) {
 		newPos_y = CONSOLE_HEIGHT - 1;
 	}
@@ -127,7 +127,7 @@ void logic() {
 		newPos_x = CONSOLE_WIDTH - 1;
 	}
 	newPos_y %= CONSOLE_HEIGHT;
-	newPos_x %= CONSOLE_WIDTH;*/
+	newPos_x %= CONSOLE_WIDTH;
 	player_y = newPos_y;
 	player_x = newPos_x;
 
