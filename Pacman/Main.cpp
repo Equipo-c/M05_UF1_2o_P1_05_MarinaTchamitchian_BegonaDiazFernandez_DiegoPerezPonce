@@ -21,41 +21,50 @@ int mapa_puntos = 0;
 int player_puntos = 0;
 
 void Inicializar() {
-	
-		for (size_t i = 0; i < CONSOLE_HEIGHT; i++)
-		{
-			for (size_t j = 0; j < CONSOLE_WIDTH; j++)
-			{
-				if ((i == 0 || i == CONSOLE_HEIGHT - 1 || j == 0 || j == CONSOLE_WIDTH - 1))
-				{
-					mapa[i][j] = MAP_TILES::WALL;
-					
-					//mapa[0][0]= MAP_TILES::WALL;
-					//mapa[1][0] = MAP_TILES::WALL;
-				}
-				else if (i == 5 || i == CONSOLE_HEIGHT - 6 || j == 5 || j == CONSOLE_WIDTH - 6) {
-					mapa[i][j] = MAP_TILES::PUNTOS;
-				
-					mapa_puntos++;
-				}
-				else{
-				//else if (i == 3 || i == CONSOLE_HEIGHT - 3 || j == 4 || j == CONSOLE_WIDTH - 5) {
-					mapa[i][j] = MAP_TILES::EMPTY;
-					mapa[4][0] = MAP_TILES::EMPTY;
-					mapa[5][0] = MAP_TILES::EMPTY;
-					mapa[4][9] = MAP_TILES::EMPTY;
-					mapa[5][9] = MAP_TILES::EMPTY;
-					mapa[0][4] = MAP_TILES::EMPTY;
-					mapa[0][5] = MAP_TILES::EMPTY;
-					mapa[10][4] = MAP_TILES::EMPTY;
-					mapa[10][5] = MAP_TILES::EMPTY;
-					
 
-				}
+	for (size_t i = 0; i < CONSOLE_HEIGHT; i++)
+	{
+		for (size_t j = 0; j < CONSOLE_WIDTH; j++)
+		{
+			if ((i == 0 || i == CONSOLE_HEIGHT - 1 || j == 0 || j == CONSOLE_WIDTH - 1))
+			{
+				mapa[i][j] = MAP_TILES::WALL;
+
+				//mapa[0][0]= MAP_TILES::WALL;
+				//mapa[1][0] = MAP_TILES::WALL;
+			}
+			else if (i == 5 || i == CONSOLE_HEIGHT - 6 || j == 5 || j == CONSOLE_WIDTH - 6) {
+				mapa[i][j] = MAP_TILES::PUNTOS;
+				/*mapa[9][4] = MAP_TILES::PUNTOS;
+				mapa[9][5] = MAP_TILES::PUNTOS;
+				mapa[4][0] = MAP_TILES::PUNTOS;
+				mapa[5][0] = MAP_TILES::PUNTOS;
+				mapa[4][9] = MAP_TILES::PUNTOS;
+				mapa[5][9] = MAP_TILES::PUNTOS;
+				mapa[0][4] = MAP_TILES::PUNTOS;
+				mapa[0][5] = MAP_TILES::PUNTOS;
+				mapa[8][4] = MAP_TILES::PUNTOS;
+				mapa[8][5] = MAP_TILES::PUNTOS;*/
+				mapa_puntos++;
+			}
+			else {
+				//else if (i == 3 || i == CONSOLE_HEIGHT - 3 || j == 4 || j == CONSOLE_WIDTH - 5) {
+				mapa[i][j] = MAP_TILES::EMPTY;
+				mapa[4][0] = MAP_TILES::EMPTY;
+				mapa[5][0] = MAP_TILES::EMPTY;
+				mapa[4][9] = MAP_TILES::EMPTY;
+				mapa[5][9] = MAP_TILES::EMPTY;
+				mapa[0][4] = MAP_TILES::EMPTY;
+				mapa[0][5] = MAP_TILES::EMPTY;
+				mapa[9][4] = MAP_TILES::EMPTY;
+				mapa[9][5] = MAP_TILES::EMPTY;
+
 
 			}
+
 		}
-	
+	}
+
 }
 void Input() {
 	char tempInput;
@@ -91,6 +100,8 @@ void Input() {
 void logic() {
 	int newPos_y = player_y;
 	int newPos_x = player_x;
+	
+
 	switch (input)
 	{
 	case UP:
@@ -109,6 +120,8 @@ void logic() {
 		run = false;
 		break;
 	}
+	
+
 	if (mapa[newPos_y][newPos_x] == MAP_TILES::WALL)
 	{
 		newPos_y = player_y;
@@ -119,17 +132,22 @@ void logic() {
 		player_puntos++;
 		mapa[newPos_y][newPos_x] = MAP_TILES::EMPTY;
 	}
-	// volver al otro lado de la pantalla cuando cruzas un limite
+	//volver al otro lado de la pantalla cuando cruzas un limite
 	if (newPos_y < 0) {
 		newPos_y = CONSOLE_HEIGHT - 1;
 	}
+
 	if ( newPos_x < 0) {
 		newPos_x = CONSOLE_WIDTH - 1;
 	}
-	newPos_y %= CONSOLE_HEIGHT;
+	
+newPos_y %= CONSOLE_HEIGHT;
 	newPos_x %= CONSOLE_WIDTH;
+
+player_x = newPos_x;
+	
 	player_y = newPos_y;
-	player_x = newPos_x;
+	
 
 	if (mapa_puntos <= 0)
 	{
@@ -172,5 +190,4 @@ int main()
 
 
 }
-
 
