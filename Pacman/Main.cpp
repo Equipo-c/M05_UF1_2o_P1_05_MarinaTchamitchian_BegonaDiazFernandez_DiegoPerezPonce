@@ -10,7 +10,7 @@ enum MAP_TILES {WALL='#', EMPTY=' ', POINT='.' };
 enum USER_INPUTS { NONE,UP,DOWN,RIGHT,LEFT,QUIT };
 MAP_TILES mapa[CONSOLE_HEIGHT][CONSOLE_WIDTH];
 
-
+//error en pantalla
 
 
 
