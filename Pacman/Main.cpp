@@ -1,11 +1,11 @@
 #include <iostream>
-//#include <windows.h>  
+#include <windows.h>  
 using namespace std;
 
 #define CONSOLE_HEIGHT 10
 #define CONSOLE_WIDTH 10
-//
-enum MAP_TILES { WALL = '#', EMPTY = ' ', POINT = '.' };
+
+enum MAP_TILES { WALL = '#', EMPTY = ' ', PUNTOS = '.' };
 MAP_TILES mapa[CONSOLE_HEIGHT][CONSOLE_WIDTH];
 
 enum USER_INPUT { NONE, UP, DOWN, RIGHT, LEFT, QUIT };
@@ -30,7 +30,7 @@ void Inicializar() {
 				mapa[i][j] = MAP_TILES::WALL;
 			}
 			else if (i == 5 || i == CONSOLE_HEIGHT - 6 || j == 5 || j == CONSOLE_WIDTH - 6) {
-				mapa[i][j] = MAP_TILES::POINT;
+				mapa[i][j] = MAP_TILES::PUNTOS;
 				mapa_puntos++;
 			}
 			else {
@@ -97,7 +97,7 @@ void logic() {
 		newPos_y = player_y;
 		newPos_x = player_x;
 	}
-	else if (mapa[newPos_y][newPos_x] == MAP_TILES::POINT) {
+	else if (mapa[newPos_y][newPos_x] == MAP_TILES::PUNTOS) {
 		mapa_puntos--;
 		player_puntos++;
 		mapa[newPos_y][newPos_x] = MAP_TILES::EMPTY;
@@ -154,8 +154,6 @@ int main()
 	}
 
 
-}}
-
-
+}
 
 
