@@ -21,24 +21,42 @@ int mapa_puntos = 0;
 int player_puntos = 0;
 
 void Inicializar() {
-	for (size_t i = 0; i < CONSOLE_HEIGHT; i++)
-	{
-		for (size_t j = 0; j < CONSOLE_WIDTH; j++)
+	
+		for (size_t i = 0; i < CONSOLE_HEIGHT; i++)
 		{
-			if ((i == 0 || i == CONSOLE_HEIGHT - 1 || j == 0 || j == CONSOLE_WIDTH - 1))
+			for (size_t j = 0; j < CONSOLE_WIDTH; j++)
 			{
-				mapa[i][j] = MAP_TILES::WALL;
-			}
-			else if (i == 5 || i == CONSOLE_HEIGHT - 6 || j == 5 || j == CONSOLE_WIDTH - 6) {
-				mapa[i][j] = MAP_TILES::PUNTOS;
-				mapa_puntos++;
-			}
-			else {
-				mapa[i][j] = MAP_TILES::EMPTY;
-			}
+				if ((i == 0 || i == CONSOLE_HEIGHT - 1 || j == 0 || j == CONSOLE_WIDTH - 1))
+				{
+					mapa[i][j] = MAP_TILES::WALL;
+					
+					//mapa[0][0]= MAP_TILES::WALL;
+					//mapa[1][0] = MAP_TILES::WALL;
+				}
+				else if (i == 5 || i == CONSOLE_HEIGHT - 6 || j == 5 || j == CONSOLE_WIDTH - 6) {
+					mapa[i][j] = MAP_TILES::PUNTOS;
+					mapa[9][4] = MAP_TILES::PUNTOS;
+					mapa[9][5] = MAP_TILES::PUNTOS;
+					mapa_puntos++;
+				}
+				else{
+				//else if (i == 3 || i == CONSOLE_HEIGHT - 3 || j == 4 || j == CONSOLE_WIDTH - 5) {
+					mapa[i][j] = MAP_TILES::EMPTY;
+					mapa[4][0] = MAP_TILES::EMPTY;
+					mapa[5][0] = MAP_TILES::EMPTY;
+					mapa[4][9] = MAP_TILES::EMPTY;
+					mapa[5][9] = MAP_TILES::EMPTY;
+					mapa[0][4] = MAP_TILES::EMPTY;
+					mapa[0][5] = MAP_TILES::EMPTY;
+					mapa[9][4] = MAP_TILES::EMPTY;
+					mapa[9][5] = MAP_TILES::EMPTY;
+					
 
+				}
+
+			}
 		}
-	}
+	
 }
 void Input() {
 	char tempInput;
