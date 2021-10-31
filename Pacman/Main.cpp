@@ -1,5 +1,5 @@
 #include <iostream>
-#include <windows.h>  
+//#include <windows.h>  
 using namespace std;
 
 #define CONSOLE_HEIGHT 10
