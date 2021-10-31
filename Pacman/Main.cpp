@@ -4,7 +4,7 @@ using namespace std;
 
 #define CONSOLE_HEIGHT 10
 #define CONSOLE_WIDTH 10
-
+//
 enum MAP_TILES { WALL = '#', EMPTY = ' ', POINT = '.' };
 MAP_TILES mapa[CONSOLE_HEIGHT][CONSOLE_WIDTH];
 
