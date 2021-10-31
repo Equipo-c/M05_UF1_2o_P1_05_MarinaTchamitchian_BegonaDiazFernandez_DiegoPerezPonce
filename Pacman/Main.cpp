@@ -1,52 +1,45 @@
 #include <iostream>
+#include <windows.h>  
 using namespace std;
 
+#define CONSOLE_HEIGHT 10
+#define CONSOLE_WIDTH 10
 
-#define CONSOLE_HEIGHT 29
-#define CONSOLE_WIDTH 119
+enum MAP_TILES { WALL = '#', EMPTY = ' ', PUNTOS = '.' };
+MAP_TILES mapa[CONSOLE_HEIGHT][CONSOLE_WIDTH];
 
-enum MAP_TILES { WALL = '#', EMPTY = ' ', POINT = '.' };
-enum USERS_INPUTS { NONE, UP, DOWN, RIGHT, LEFT, QUIT };
-enum MAP_TILES mapa[CONSOLE_HEIGHT][CONSOLE_WIDTH];
-
-//Prueba Diego
-
-char player = '0';
-USERS_INPUTS input = USERS_INPUTS::NONE;
+enum USER_INPUT { NONE, UP, DOWN, RIGHT, LEFT, QUIT };
+char player = 'O';
+//int j = 0;
+USER_INPUT input = USER_INPUT::NONE;
 bool run = true;
-int Player_X = 10;
-int Player_Y = 10;
+
+int player_x = 5;
+int player_y = 5;
 
 int mapa_puntos = 0;
 int player_puntos = 0;
 
-
-void Inicializar()
-{
+void Inicializar() {
 	for (size_t i = 0; i < CONSOLE_HEIGHT; i++)
 	{
 		for (size_t j = 0; j < CONSOLE_WIDTH; j++)
 		{
-			if (i == 0 || i == CONSOLE_HEIGHT - 1 || j == 0 || j == CONSOLE_WIDTH - 1)
+			if ((i == 0 || i == CONSOLE_HEIGHT - 1 || j == 0 || j == CONSOLE_WIDTH - 1))
 			{
 				mapa[i][j] = MAP_TILES::WALL;
-
 			}
-			else if (i == 1 || i == CONSOLE_HEIGHT - 2 || j == 1 || j == CONSOLE_WIDTH - 2)
-			{
-				mapa[i][j] = MAP_TILES::POINT;
+			else if (i == 5 || i == CONSOLE_HEIGHT - 6 || j == 5 || j == CONSOLE_WIDTH - 6) {
+				mapa[i][j] = MAP_TILES::PUNTOS;
 				mapa_puntos++;
 			}
-			else
-			{
+			else {
 				mapa[i][j] = MAP_TILES::EMPTY;
-
 			}
+
 		}
 	}
-
 }
-
 void Input() {
 	char tempInput;
 	cin >> tempInput;
@@ -54,91 +47,114 @@ void Input() {
 	{
 	case 'W':
 	case 'w':
-		input = USERS_INPUTS::UP;
-		break;
-	case 'A':
-	case 'a':
-		input = USERS_INPUTS::LEFT;
+		input = USER_INPUT::UP;
 		break;
 	case 'S':
 	case 's':
-		input = USERS_INPUTS::DOWN;
+		input = USER_INPUT::DOWN;
 		break;
 	case 'D':
 	case 'd':
-		input = USERS_INPUTS::RIGHT;
+		input = USER_INPUT::RIGHT;
+		break;
+	case 'A':
+	case 'a':
+		input = USER_INPUT::LEFT;
 		break;
 	case 'q':
 	case 'Q':
-		input = USERS_INPUTS::QUIT;
+		input = USER_INPUT::QUIT;
 		break;
 	default:
-		input = USERS_INPUTS::NONE;
+		input = USER_INPUT::NONE;
 		break;
 	}
 }
-void Logica() {
-	int newPos_Y = Player_Y;
-	int newPos_X = Player_X;
+
+void logic() {
+	int newPos_y = player_y;
+	int newPos_x = player_x;
 	switch (input)
 	{
-
 	case UP:
-		newPos_Y--;
+		newPos_y--;
 		break;
 	case DOWN:
-		newPos_Y++;
+		newPos_y++;
 		break;
 	case RIGHT:
-		newPos_X++;
+		newPos_x++;
 		break;
 	case LEFT:
-		newPos_X--;
+		newPos_x--;
 		break;
 	case QUIT:
 		run = false;
 		break;
-
 	}
-	if (mapa[newPos_Y][newPos_X] == MAP_TILES::WALL)
+	if (mapa[newPos_y][newPos_x] == MAP_TILES::WALL)
 	{
-		newPos_Y = Player_Y;
-		newPos_X = Player_X;
-
+		newPos_y = player_y;
+		newPos_x = player_x;
 	}
+	else if (mapa[newPos_y][newPos_x] == MAP_TILES::PUNTOS) {
+		mapa_puntos--;
+		player_puntos++;
+		mapa[newPos_y][newPos_x] = MAP_TILES::EMPTY;
+	}
+	/* volver al otro lado de la pantalla cuando cruzas un limite
+	if (newPos_y < 0) {
+		newPos_y = CONSOLE_HEIGHT - 1;
+	}
+	if ( newPos_x < 0) {
+		newPos_x = CONSOLE_WIDTH - 1;
+	}
+	newPos_y %= CONSOLE_HEIGHT;
+	newPos_x %= CONSOLE_WIDTH;*/
+	player_y = newPos_y;
+	player_x = newPos_x;
 
-
-	Player_Y = newPos_Y;
-	Player_X = newPos_X;
+	if (mapa_puntos <= 0)
+	{
+		cout << "BIEN HECHO" << endl;
+		cout << "Pulsa 'Q' para salir" << endl;
+		system("PAUSE");
+	}
 }
 void Draw() {
-	system("CLS");
+	system("CLS"); //limpiar la pantalla
 	for (size_t i = 0; i < CONSOLE_HEIGHT; i++)
 	{
 		for (size_t j = 0; j < CONSOLE_WIDTH; j++)
 		{
-			if (Player_X == j && Player_Y == i) {
+			if (player_x == j && player_y == i) {
 				cout << player;
 			}
 			else {
+
 				cout << (char)mapa[i][j];
 			}
 		}
 		cout << endl;
 	}
+	//system("Color DE");
+	cout << "SCORE:" << player_puntos << endl;
+	cout << "LEFT TO COLLECT:" << mapa_puntos << endl;
+	cout << "Movments (w, s, d, a):" << endl;
 }
+
 int main()
 {
 	Inicializar();
-	while (run) {
+	while (run)
+	{
 		Input();
-
-		Logica();
-
+		logic();
 		Draw();
 	}
-}
 
+
+}
 
 
 
