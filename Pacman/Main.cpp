@@ -35,8 +35,7 @@ void Inicializar() {
 				}
 				else if (i == 5 || i == CONSOLE_HEIGHT - 6 || j == 5 || j == CONSOLE_WIDTH - 6) {
 					mapa[i][j] = MAP_TILES::PUNTOS;
-					mapa[9][4] = MAP_TILES::PUNTOS;
-					mapa[9][5] = MAP_TILES::PUNTOS;
+				
 					mapa_puntos++;
 				}
 				else{
