@@ -5,7 +5,7 @@ using namespace std;
 #define CONSOLE_HEIGHT 10
 #define CONSOLE_WIDTH 10
 
-enum MAP_TILES { WALL = '#', EMPTY = ' ', POINT = '.' };
+enum MAP_TILES { WALL = '#', EMPTY = ' ', PUNTOS = '.' };
 MAP_TILES mapa[CONSOLE_HEIGHT][CONSOLE_WIDTH];
 
 enum USER_INPUT { NONE, UP, DOWN, RIGHT, LEFT, QUIT };
@@ -21,6 +21,7 @@ int mapa_puntos = 0;
 int player_puntos = 0;
 
 void Inicializar() {
+
 	for (size_t i = 0; i < CONSOLE_HEIGHT; i++)
 	{
 		for (size_t j = 0; j < CONSOLE_WIDTH; j++)
@@ -28,17 +29,42 @@ void Inicializar() {
 			if ((i == 0 || i == CONSOLE_HEIGHT - 1 || j == 0 || j == CONSOLE_WIDTH - 1))
 			{
 				mapa[i][j] = MAP_TILES::WALL;
+
+				//mapa[0][0]= MAP_TILES::WALL;
+				//mapa[1][0] = MAP_TILES::WALL;
 			}
 			else if (i == 5 || i == CONSOLE_HEIGHT - 6 || j == 5 || j == CONSOLE_WIDTH - 6) {
-				mapa[i][j] = MAP_TILES::POINT;
+				mapa[i][j] = MAP_TILES::PUNTOS;
+				/*mapa[9][4] = MAP_TILES::PUNTOS;
+				mapa[9][5] = MAP_TILES::PUNTOS;
+				mapa[4][0] = MAP_TILES::PUNTOS;
+				mapa[5][0] = MAP_TILES::PUNTOS;
+				mapa[4][9] = MAP_TILES::PUNTOS;
+				mapa[5][9] = MAP_TILES::PUNTOS;
+				mapa[0][4] = MAP_TILES::PUNTOS;
+				mapa[0][5] = MAP_TILES::PUNTOS;
+				mapa[8][4] = MAP_TILES::PUNTOS;
+				mapa[8][5] = MAP_TILES::PUNTOS;*/
 				mapa_puntos++;
 			}
 			else {
+				//else if (i == 3 || i == CONSOLE_HEIGHT - 3 || j == 4 || j == CONSOLE_WIDTH - 5) {
 				mapa[i][j] = MAP_TILES::EMPTY;
+				mapa[4][0] = MAP_TILES::EMPTY;
+				mapa[5][0] = MAP_TILES::EMPTY;
+				mapa[4][9] = MAP_TILES::EMPTY;
+				mapa[5][9] = MAP_TILES::EMPTY;
+				mapa[0][4] = MAP_TILES::EMPTY;
+				mapa[0][5] = MAP_TILES::EMPTY;
+				mapa[9][4] = MAP_TILES::EMPTY;
+				mapa[9][5] = MAP_TILES::EMPTY;
+
+
 			}
 
 		}
 	}
+
 }
 void Input() {
 	char tempInput;
@@ -74,6 +100,8 @@ void Input() {
 void logic() {
 	int newPos_y = player_y;
 	int newPos_x = player_x;
+	
+
 	switch (input)
 	{
 	case UP:
@@ -92,27 +120,34 @@ void logic() {
 		run = false;
 		break;
 	}
+	
+
 	if (mapa[newPos_y][newPos_x] == MAP_TILES::WALL)
 	{
 		newPos_y = player_y;
 		newPos_x = player_x;
 	}
-	else if (mapa[newPos_y][newPos_x] == MAP_TILES::POINT) {
+	else if (mapa[newPos_y][newPos_x] == MAP_TILES::PUNTOS) {
 		mapa_puntos--;
 		player_puntos++;
 		mapa[newPos_y][newPos_x] = MAP_TILES::EMPTY;
 	}
-	/* volver al otro lado de la pantalla cuando cruzas un limite
+	//volver al otro lado de la pantalla cuando cruzas un limite
 	if (newPos_y < 0) {
 		newPos_y = CONSOLE_HEIGHT - 1;
 	}
+
 	if ( newPos_x < 0) {
 		newPos_x = CONSOLE_WIDTH - 1;
 	}
-	newPos_y %= CONSOLE_HEIGHT;
-	newPos_x %= CONSOLE_WIDTH;*/
+	
+newPos_y %= CONSOLE_HEIGHT;
+	newPos_x %= CONSOLE_WIDTH;
+
+player_x = newPos_x;
+	
 	player_y = newPos_y;
-	player_x = newPos_x;
+	
 
 	if (mapa_puntos <= 0)
 	{
