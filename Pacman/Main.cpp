@@ -1,4 +1,45 @@
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>  
+using namespace std;
+
+#define CONSOLE_HEIGHT 10
+#define CONSOLE_WIDTH 10
+
+enum MAP_TILES { WALL = '#', EMPTY = ' ', PUNTOS = '.' };
+MAP_TILES mapa[CONSOLE_HEIGHT][CONSOLE_WIDTH];
+
+enum USER_INPUT { NONE, UP, DOWN, RIGHT, LEFT, QUIT };
+char player = 'O';
+//int j = 0;
+USER_INPUT input = USER_INPUT::NONE;
+bool run = true;
+
+int player_x = 5;
+int player_y = 5;
+
+int mapa_puntos = 0;
+int player_puntos = 0;
+
+void Inicializar() {
+
+	for (size_t i = 0; i < CONSOLE_HEIGHT; i++)
+	{
+		for (size_t j = 0; j < CONSOLE_WIDTH; j++)
+		{
+			if ((i == 0 || i == CONSOLE_HEIGHT - 1 || j == 0 || j == CONSOLE_WIDTH - 1))
+			{
+				mapa[i][j] = MAP_TILES::WALL;
+
+				//mapa[0][0]= MAP_TILES::WALL;
+				//mapa[1][0] = MAP_TILES::WALL;
+			}
+			else if (i == 5 || i == CONSOLE_HEIGHT - 6 || j == 5 || j == CONSOLE_WIDTH - 6) {
+				mapa[i][j] = MAP_TILES::PUNTOS;
+				mapa[9][4] = MAP_TILES::PUNTOS;
+				mapa[9][5] = MAP_TILES::PUNTOS;
+        
 #include <windows.h>  
 using namespace std;
 
@@ -41,10 +82,61 @@ void Inicializar() {
 			else {
 				//else if (i == 3 || i == CONSOLE_HEIGHT - 3 || j == 4 || j == CONSOLE_WIDTH - 5) {
 				mapa[i][j] = MAP_TILES::EMPTY;
+				mapa[4][0] = MAP_TILES::EMPTY;
+				mapa[5][0] = MAP_TILES::EMPTY;
+				mapa[4][9] = MAP_TILES::EMPTY;
+				mapa[5][9] = MAP_TILES::EMPTY;
+				mapa[0][4] = MAP_TILES::EMPTY;
+				mapa[0][5] = MAP_TILES::EMPTY;
+				mapa[9][4] = MAP_TILES::EMPTY;
+				mapa[9][5] = MAP_TILES::EMPTY;
+		}
+	}
 
-
-
+}
+void Input() {
+	char tempInput;
+	cin >> tempInput;
+	switch (tempInput)
+	{
+	case 'W':
+	case 'w':
+		input = USER_INPUT::UP;
+		break;
+	case 'S':
+	case 's':
+		input = USER_INPUT::DOWN;
+		break;
+	case 'D':
+	case 'd':
+		input = USER_INPUT::RIGHT;
+		break;
+	case 'A':
+	case 'a':
+		input = USER_INPUT::LEFT;
+		break;
+	case 'q':
+	case 'Q':
+		input = USER_INPUT::QUIT;
+		break;
+	default:
+		input = USER_INPUT::NONE;
+		break;
+	}
+}
 			}
+
+
+//int keypress() {
+//	system("/bin/stty raw");
+//	int c;
+//	system("/bin/stty -echo");
+//	c = getc(stdin);
+//	Input();
+//	system("/bin/stty echo");
+//	system("/bin/stty cooked");
+//	return c;
+//}
 
 		}
 	}
@@ -159,9 +251,9 @@ void Inicializar() {
 	mapa[7][25] = MAP_TILES::WALL;
 	mapa[7][26] = MAP_TILES::WALL;
 	mapa[7][27] = MAP_TILES::WALL;
-
 	mapa[5][20] = MAP_TILES::WALL;
 	mapa[4][20] = MAP_TILES::WALL;
+
 
 }
 void Input() {
@@ -198,8 +290,6 @@ void Input() {
 void logic() {
 	int newPos_y = player_y;
 	int newPos_x = player_x;
-
-
 	switch (input)
 	{
 	case UP:
@@ -218,6 +308,50 @@ void logic() {
 		run = false;
 		break;
 	}
+	if (mapa[newPos_y][newPos_x] == MAP_TILES::WALL)
+	{
+		newPos_y = player_y;
+		newPos_x = player_x;
+	}
+	else if (mapa[newPos_y][newPos_x] == MAP_TILES::PUNTOS) {
+		mapa_puntos--;
+		player_puntos++;
+		mapa[newPos_y][newPos_x] = MAP_TILES::EMPTY;
+	}
+	// volver al otro lado de la pantalla cuando cruzas un limite
+	if (newPos_y < 0) {
+		newPos_y = CONSOLE_HEIGHT - 1;
+	}
+	if (newPos_x < 0) {
+		newPos_x = CONSOLE_WIDTH - 1;
+	}
+	newPos_y %= CONSOLE_HEIGHT;
+	newPos_x %= CONSOLE_WIDTH;
+	player_y = newPos_y;
+	player_x = newPos_x;
+
+	if (mapa_puntos <= 0)
+	{
+		cout << "BIEN HECHO" << endl;
+		cout << "Pulsa 'Q' para salir" << endl;
+		system("PAUSE");
+	}
+}
+void Draw() {
+	system("CLS"); //limpiar la pantalla
+	for (size_t i = 0; i < CONSOLE_HEIGHT; i++)
+	{
+		for (size_t j = 0; j < CONSOLE_WIDTH; j++)
+		{
+			if (player_x == j && player_y == i) {
+				cout << player;
+			}
+			else {
+
+				cout << (char)mapa[i][j];
+			}
+		}
+		cout << endl;
 
 
 	//volver al otro lado de la pantalla cuando cruzas un limite
@@ -232,6 +366,12 @@ void logic() {
 	newPos_y %= CONSOLE_HEIGHT;
 	newPos_x %= CONSOLE_WIDTH;
 
+	HANDLE  hConsole;
+	int k = 120;
+
+	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, k);
+
 	if (mapa[newPos_y][newPos_x] == MAP_TILES::WALL)
 	{
 		newPos_y = player_y;
@@ -244,8 +384,8 @@ void logic() {
 	}
 
 	player_x = newPos_x;
-
 	player_y = newPos_y;
+
 
 	if (mapa_puntos <= 0)
 	{
@@ -279,12 +419,17 @@ void Draw() {
 int main()
 {
 	Inicializar();
+
+
+	/*do {
+		int key = keypress();
+		std::cout << key << "\n";
+	}*/
+
+
 	while (run)
 	{
 		Input();
 		logic();
 		Draw();
 	}
-
-
-
