@@ -1,109 +1,207 @@
-/*
-* ESTOS COMENTARIOS SE PUEDEN IR BORRANDO SEGUN VAMOS AVANZANDO, PERO CREO QUE PODRIAN ESTAR BIEN PARA
-* IR TRABAJNDO EL PROYECTO.
- 
-HOLA CHICOS, A VER OS CUENTO 
-ESTAMOS EN LA FASE DE DIBUJAR EL MAPA, SEGUN EL MODELO BASE DE ALBERTO Y LO QUE ME HA PARECIDO ENTENDER DE LA PRACTICA PUEDE SER EL MAPA MAS PEQUEÑO TIPO 10X10
-AUN ASI YO HE COPIADO EL MAPA DE ALBERTO QUE SON 6# + 6 · +6# EN VERTICAL Y 32# +18· +32# EN HORIZONTAL (ESTO LO PODEIS MODIFICAR SI LO PREFERIS)
-
-YO HE CONSEGUIDO QUE EL MAPA REINICIE PULSANDO LA LETRA "a", LO PODEMOS DEJAR ASI, YA QUE MAS TARDE SE REINICIARA AL PULSAR CUALQUIERA DE LOS INPUTS DEL PLAYER
-PERO NO CONSIGO QUE EL MAPA QUE YO QUIERO SE DIBUJE EN PANTALLA, ASI QUE EN ESE PUNTO ESTAMOS... 
-CON LO QUE AVANCEIS VAMOS HABLANDO. 
-*/
-
-
-
-//ESTS UNA PRUEBA DOS
-//sgsgsa
-//agsag
-
-
-
-
-//Holanova
-
-//hola222
-//hola33
-//hola444
-//hola555
-
-//Confirmando Prueba
-
-
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>  
 using namespace std;
 
+#define CONSOLE_HEIGHT 10
+#define CONSOLE_WIDTH 10
 
-#define CONSOLE_HEIGHT 3
-#define CONSOLE_WIDTH 30
-//{ 'x' };/*
-char relleno={ 'x' };
-//char relleno[CONSOLE_WIDTH] [CONSOLE_HEIGHT]  { "################################··················################################",
-//"#                                                                                #"};
-//"#                                                                                #",
-//"#                                                                                #",
-//"#                                                                                #",
-//"·                                                                                ·",
-//"·                                                                                ·",
-//"·                                                                                ·",
-//"·                                                                                ·",
-//"·                                                                                ·",
-//"·                                                                                ·",
-//"#                                                                                #",
-//"#                                                                                #",
-//"#                                                                                #",
-//"#                                                                                #",
-//"#                                                                                #",
-//"################################··················################################",
-//};*/
-char input = 'a';
+enum MAP_TILES { WALL = '#', EMPTY = ' ', PUNTOS = '.' };
+MAP_TILES mapa[CONSOLE_HEIGHT][CONSOLE_WIDTH];
+
+enum USER_INPUT { NONE, UP, DOWN, RIGHT, LEFT, QUIT };
+char player = 'O';
+//int j = 0;
+USER_INPUT input = USER_INPUT::NONE;
 bool run = true;
 
+int player_x = 5;
+int player_y = 5;
 
-// While() {} numero de veces que se repite la consola
-void Input() {
-	cin >> input;
-}
+int mapa_puntos = 0;
+int player_puntos = 0;
 
-void Logica() {
-	//salir del juego
-	if (input == 'q' || input == 'Q')
-	{
-		run = false;
-	}
-}
+void Inicializar() {
 
-void Draw() {
-	//limpiar pantalla tras interaccion
-	system("CLS");
-
-	//int i, j; 
-	for (size_t i = 0; i < CONSOLE_WIDTH; i++)
+	for (size_t i = 0; i < CONSOLE_HEIGHT; i++)
 	{
 		for (size_t j = 0; j < CONSOLE_WIDTH; j++)
 		{
-			cout << relleno;
+			if ((i == 0 || i == CONSOLE_HEIGHT - 1 || j == 0 || j == CONSOLE_WIDTH - 1))
+			{
+				mapa[i][j] = MAP_TILES::WALL;
+
+				//mapa[0][0]= MAP_TILES::WALL;
+				//mapa[1][0] = MAP_TILES::WALL;
+			}
+			else if (i == 5 || i == CONSOLE_HEIGHT - 6 || j == 5 || j == CONSOLE_WIDTH - 6) {
+				mapa[i][j] = MAP_TILES::PUNTOS;
+				mapa[9][4] = MAP_TILES::PUNTOS;
+				mapa[9][5] = MAP_TILES::PUNTOS;
+				mapa_puntos++;
+			}
+			else {
+				//else if (i == 3 || i == CONSOLE_HEIGHT - 3 || j == 4 || j == CONSOLE_WIDTH - 5) {
+				mapa[i][j] = MAP_TILES::EMPTY;
+				mapa[4][0] = MAP_TILES::EMPTY;
+				mapa[5][0] = MAP_TILES::EMPTY;
+				mapa[4][9] = MAP_TILES::EMPTY;
+				mapa[5][9] = MAP_TILES::EMPTY;
+				mapa[0][4] = MAP_TILES::EMPTY;
+				mapa[0][5] = MAP_TILES::EMPTY;
+				mapa[9][4] = MAP_TILES::EMPTY;
+				mapa[9][5] = MAP_TILES::EMPTY;
+
+
+			}
+
 		}
+	}
+
+}
+void Input() {
+	char tempInput;
+	cin >> tempInput;
+	switch (tempInput)
+	{
+	case 'W':
+	case 'w':
+		input = USER_INPUT::UP;
+		break;
+	case 'S':
+	case 's':
+		input = USER_INPUT::DOWN;
+		break;
+	case 'D':
+	case 'd':
+		input = USER_INPUT::RIGHT;
+		break;
+	case 'A':
+	case 'a':
+		input = USER_INPUT::LEFT;
+		break;
+	case 'q':
+	case 'Q':
+		input = USER_INPUT::QUIT;
+		break;
+	default:
+		input = USER_INPUT::NONE;
+		break;
+	}
+}
 
 
+//int keypress() {
+//	system("/bin/stty raw");
+//	int c;
+//	system("/bin/stty -echo");
+//	c = getc(stdin);
+//	Input();
+//	system("/bin/stty echo");
+//	system("/bin/stty cooked");
+//	return c;
+//}
+
+
+
+void logic() {
+	int newPos_y = player_y;
+	int newPos_x = player_x;
+	switch (input)
+	{
+	case UP:
+		newPos_y--;
+		break;
+	case DOWN:
+		newPos_y++;
+		break;
+	case RIGHT:
+		newPos_x++;
+		break;
+	case LEFT:
+		newPos_x--;
+		break;
+	case QUIT:
+		run = false;
+		break;
+	}
+	if (mapa[newPos_y][newPos_x] == MAP_TILES::WALL)
+	{
+		newPos_y = player_y;
+		newPos_x = player_x;
+	}
+	else if (mapa[newPos_y][newPos_x] == MAP_TILES::PUNTOS) {
+		mapa_puntos--;
+		player_puntos++;
+		mapa[newPos_y][newPos_x] = MAP_TILES::EMPTY;
+	}
+	// volver al otro lado de la pantalla cuando cruzas un limite
+	if (newPos_y < 0) {
+		newPos_y = CONSOLE_HEIGHT - 1;
+	}
+	if (newPos_x < 0) {
+		newPos_x = CONSOLE_WIDTH - 1;
+	}
+	newPos_y %= CONSOLE_HEIGHT;
+	newPos_x %= CONSOLE_WIDTH;
+	player_y = newPos_y;
+	player_x = newPos_x;
+
+	if (mapa_puntos <= 0)
+	{
+		cout << "BIEN HECHO" << endl;
+		cout << "Pulsa 'Q' para salir" << endl;
+		system("PAUSE");
+	}
+}
+void Draw() {
+	system("CLS"); //limpiar la pantalla
+	for (size_t i = 0; i < CONSOLE_HEIGHT; i++)
+	{
+		for (size_t j = 0; j < CONSOLE_WIDTH; j++)
+		{
+			if (player_x == j && player_y == i) {
+				cout << player;
+			}
+			else {
+
+				cout << (char)mapa[i][j];
+			}
+		}
+		cout << endl;
 	}
 
 
-	cout << endl;
+	HANDLE  hConsole;
+	int k = 120;
+
+	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, k);
+
+
+	//system("Color DE");
+	cout << "SCORE:" << player_puntos << endl;
+	cout << "LEFT TO COLLECT:" << mapa_puntos << endl;
+	cout << "Movments (w, s, d, a):" << endl;
 }
 
 int main()
 {
-	while (run) {
+	Inicializar();
 
+
+	/*do {
+		int key = keypress();
+		std::cout << key << "\n";
+	}*/
+
+	while (run)
+	{
 		Input();
-		Logica();
+		logic();
 		Draw();
 	}
 
 
 }
-
-
-
-
