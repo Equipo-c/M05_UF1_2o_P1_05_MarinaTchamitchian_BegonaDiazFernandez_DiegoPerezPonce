@@ -6,6 +6,7 @@ using namespace std;
 #define CONSOLE_WIDTH 40
 
 enum MAP_TILES { WALL = '#', EMPTY = ' ', PUNTOS = '.' };
+
 MAP_TILES mapa[CONSOLE_HEIGHT][CONSOLE_WIDTH];
 
 enum USER_INPUT { NONE, UP, DOWN, RIGHT, LEFT, QUIT };
@@ -31,18 +32,10 @@ void Inicializar() {
 				mapa[i][j] = MAP_TILES::WALL;
 
 			}
-			else if (i == 5 || i == CONSOLE_HEIGHT - 1 || j == 5 || j == CONSOLE_WIDTH - 1) {
+
+			else if (i == 5 || i == CONSOLE_HEIGHT - 6 || j == 5 || j == CONSOLE_WIDTH - 6) {
 				mapa[i][j] = MAP_TILES::PUNTOS;
-				/*mapa[9][4] = MAP_TILES::PUNTOS;
-				mapa[9][5] = MAP_TILES::PUNTOS;
-				mapa[4][0] = MAP_TILES::PUNTOS;
-				mapa[5][0] = MAP_TILES::PUNTOS;
-				mapa[4][9] = MAP_TILES::PUNTOS;
-				mapa[5][9] = MAP_TILES::PUNTOS;
-				mapa[0][4] = MAP_TILES::PUNTOS;
-				mapa[0][5] = MAP_TILES::PUNTOS;
-				mapa[8][4] = MAP_TILES::PUNTOS;
-				mapa[8][5] = MAP_TILES::PUNTOS;*/
+    
 				mapa_puntos++;
 			}
 			else {
@@ -294,4 +287,4 @@ int main()
 	}
 
 
-}
+
