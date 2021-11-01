@@ -76,6 +76,7 @@ void Input() {
 	}
 	
 }
+/* Intento num1 SinEnter
 int keypress() {
 	system("/bin/stty raw");
 	int c;
@@ -85,7 +86,7 @@ int keypress() {
 	system("/bin/stty echo");
 	system("/bin/stty cooked");
 	return c;
-}
+}*/
 
 void logic() {
 	int newPos_y = player_y;
@@ -162,10 +163,10 @@ void Draw() {
 int main()
 {
 	Inicializar();
-	do {
+	/*do {
 		int key = keypress();
 		std::cout << key << "\n";
-	}
+	}*/
 	 while (run);
 	{
 		Input();
