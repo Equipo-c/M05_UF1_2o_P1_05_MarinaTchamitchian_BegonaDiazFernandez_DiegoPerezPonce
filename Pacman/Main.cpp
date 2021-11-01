@@ -299,6 +299,7 @@ void Draw() {
 				if (mapa[j][i] == WALL)
 				{
 					setCColor(color[0]);
+
 				}
 				else if (mapa[j][i] == PUNTOS)
 				{
