@@ -201,6 +201,7 @@ void Input() {
 	case 'W':
 	case 'w':
 		input = USER_INPUT::UP;
+
 		break;
 	case 'S':
 	case 's':
@@ -321,11 +322,18 @@ void Draw() {
 
 int main()
 {
+
 	Inicializar();
 	while (run)
 	{
-		Input();
-		logic();
-		Draw();
+		//sin Enter
+		/*while (_kbhit())
+		{
+			input = _getch();*/
+
+			Input();
+			logic();
+			Draw();
+		//}
 	}
 }
