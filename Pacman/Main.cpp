@@ -1,6 +1,7 @@
 #include <iostream>
 #include <windows.h>  
 #include <stdio.h>
+#include <conio.h>
 
 
 using namespace std;
@@ -36,7 +37,7 @@ void setCColor(int color)
 
 	SetConsoleTextAttribute(hConsole, color | (backcolor * 0x10 + 0x100));
 }
-
+//colores para escoger
 int color[7] = {
 	  0x009,
 	  0x00E,
@@ -247,7 +248,6 @@ void logic() {
 		break;
 	}
 
-
 	//volver al otro lado de la pantalla cuando cruzas un limite
 	if (newPos_y < 0) {
 		newPos_y = CONSOLE_HEIGHT - 1;
@@ -295,7 +295,7 @@ void Draw() {
 				cout << player;
 			}
 			else 
-			{
+			{  //pintar el mapa de diferentes colores
 				if (mapa[j][i] == WALL)
 				{
 					setCColor(color[0]);
