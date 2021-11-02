@@ -28,6 +28,7 @@ int player_puntos = 0;
 /*HANDLE  hConsole;
 int k;*/
 int backcolor = 0;
+//int playerColor = 1;
 
 void setCColor(int color)
 {
@@ -292,7 +293,7 @@ void Draw() {
 		{
 			cout << (char)mapa[i][j];
 			if (player_x == j && player_y == i) {
-				setCColor(color[1]);
+				//playerColor;
 				cout << player;
 			}
 			else 
@@ -304,7 +305,7 @@ void Draw() {
 				}
 				else if (mapa[j][i] == PUNTOS)
 				{
-					setCColor(color[3]);
+					setCColor(color[2]);
 				}
 			}
 		}
