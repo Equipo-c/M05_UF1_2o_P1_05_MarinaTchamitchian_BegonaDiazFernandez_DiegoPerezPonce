@@ -291,6 +291,7 @@ void Draw() {
 	cout << "Movments (w, s, d, a):" << endl;
 }
 
+
 int main()
 {
 	Inicializar();
