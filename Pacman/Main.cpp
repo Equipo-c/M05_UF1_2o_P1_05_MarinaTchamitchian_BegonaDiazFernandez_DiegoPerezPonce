@@ -6,7 +6,6 @@ using namespace std;
 #define CONSOLE_WIDTH 40
 
 enum MAP_TILES { WALL = '#', EMPTY = ' ', PUNTOS = '.' };
-
 MAP_TILES mapa[CONSOLE_HEIGHT][CONSOLE_WIDTH];
 
 enum USER_INPUT { NONE, UP, DOWN, RIGHT, LEFT, QUIT };
@@ -31,11 +30,21 @@ void Inicializar() {
 			{
 				mapa[i][j] = MAP_TILES::WALL;
 
+
+
 			}
-
-			else if (i == 6 || i == CONSOLE_HEIGHT - 6 || j == 14 || j == CONSOLE_WIDTH - 11) {
+			else if (i == 5 || i == CONSOLE_HEIGHT - 1 || j == 5 || j == CONSOLE_WIDTH - 1) {
 				mapa[i][j] = MAP_TILES::PUNTOS;
-
+				/*mapa[9][4] = MAP_TILES::PUNTOS;
+				mapa[9][5] = MAP_TILES::PUNTOS;
+				mapa[4][0] = MAP_TILES::PUNTOS;
+				mapa[5][0] = MAP_TILES::PUNTOS;
+				mapa[4][9] = MAP_TILES::PUNTOS;
+				mapa[5][9] = MAP_TILES::PUNTOS;
+				mapa[0][4] = MAP_TILES::PUNTOS;
+				mapa[0][5] = MAP_TILES::PUNTOS;
+				mapa[8][4] = MAP_TILES::PUNTOS;
+				mapa[8][5] = MAP_TILES::PUNTOS;*/
 				mapa_puntos++;
 			}
 			else {
@@ -47,7 +56,12 @@ void Inicializar() {
 			}
 
 		}
+
+
+
 	}
+
+
 
 	//PARED IZQUIERDA
 	mapa[6][0] = MAP_TILES::EMPTY;
@@ -138,16 +152,16 @@ void Inicializar() {
 	mapa[12][30] = MAP_TILES::WALL;
 	mapa[11][30] = MAP_TILES::WALL;
 	mapa[10][30] = MAP_TILES::WALL;
-	//mapa[9][30] = MAP_TILES::WALL;
+	mapa[9][30] = MAP_TILES::WALL;
 
-	//mapa[6][20] = MAP_TILES::WALL;
+	mapa[6][20] = MAP_TILES::WALL;
 	mapa[7][20] = MAP_TILES::WALL;
 	mapa[8][20] = MAP_TILES::WALL;
 
 	mapa[8][10] = MAP_TILES::WALL;
 	mapa[7][10] = MAP_TILES::WALL;
-	//mapa[9][10] = MAP_TILES::WALL;
-	//mapa[9][10] = MAP_TILES::WALL;
+	mapa[9][10] = MAP_TILES::WALL;
+	mapa[9][10] = MAP_TILES::WALL;
 
 	mapa[7][18] = MAP_TILES::WALL;
 	mapa[7][19] = MAP_TILES::WALL;
@@ -198,6 +212,8 @@ void Input() {
 }
 
 void logic() {
+
+
 	int newPos_y = player_y;
 	int newPos_x = player_x;
 
@@ -251,21 +267,27 @@ void logic() {
 
 	if (mapa_puntos <= 0)
 	{
+
 		cout << "BIEN HECHO" << endl;
 		cout << "Pulsa 'Q' para salir" << endl;
 		system("PAUSE");
 	}
+
+
 }
 void Draw() {
-	
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);
+
 	system("CLS"); //limpiar la pantalla
 	for (size_t i = 0; i < CONSOLE_HEIGHT; i++)
 	{
+
 		for (size_t j = 0; j < CONSOLE_WIDTH; j++)
 		{
 			if (player_x == j && player_y == i) {
 				cout << player;
+
+
 			}
 			else {
 
@@ -274,7 +296,7 @@ void Draw() {
 		}
 		cout << endl;
 	}
-	//system("Color DE");
+
 
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE);
 
@@ -292,4 +314,6 @@ int main()
 		logic();
 		Draw();
 	}
+
+
 }
