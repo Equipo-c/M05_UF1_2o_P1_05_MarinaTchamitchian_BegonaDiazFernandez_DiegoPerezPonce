@@ -1,6 +1,4 @@
 #include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
 #include <windows.h>  
 using namespace std;
 
@@ -198,20 +196,6 @@ void Input() {
 	}
 }
 
-
-//int keypress() {
-//	system("/bin/stty raw");
-//	int c;
-//	system("/bin/stty -echo");
-//	c = getc(stdin);
-//	Input();
-//	system("/bin/stty echo");
-//	system("/bin/stty cooked");
-//	return c;
-//}
-
-
-
 void logic() {
 	int newPos_y = player_y;
 	int newPos_x = player_x;
@@ -245,6 +229,7 @@ void logic() {
 	if (newPos_x < 0) {
 		newPos_x = CONSOLE_WIDTH - 1;
 	}
+
 	newPos_y %= CONSOLE_HEIGHT;
 	newPos_x %= CONSOLE_WIDTH;
 
@@ -260,6 +245,8 @@ void logic() {
 	}
 
 	player_x = newPos_x;
+
+	player_y = newPos_y;
 
 	if (mapa_puntos <= 0)
 	{
@@ -308,13 +295,6 @@ void Draw() {
 int main()
 {
 	Inicializar();
-
-
-	/*do {
-		int key = keypress();
-		std::cout << key << "\n";
-	}*/
-
 	while (run)
 	{
 		Input();
