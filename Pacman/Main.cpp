@@ -165,6 +165,8 @@ void Inicializar() {
 
 }
 void Input() {
+
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
 	char tempInput;
 	cin >> tempInput;
 	switch (tempInput)
@@ -255,6 +257,8 @@ void logic() {
 	}
 }
 void Draw() {
+	
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);
 	system("CLS"); //limpiar la pantalla
 	for (size_t i = 0; i < CONSOLE_HEIGHT; i++)
 	{
@@ -271,6 +275,9 @@ void Draw() {
 		cout << endl;
 	}
 	//system("Color DE");
+
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE);
+
 	cout << "SCORE:" << player_puntos << endl;
 	cout << "LEFT TO COLLECT:" << mapa_puntos << endl;
 	cout << "Movments (w, s, d, a):" << endl;
