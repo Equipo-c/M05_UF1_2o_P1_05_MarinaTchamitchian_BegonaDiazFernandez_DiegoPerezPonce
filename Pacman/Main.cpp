@@ -1,12 +1,13 @@
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 #include <windows.h>  
 using namespace std;
 
-#define CONSOLE_HEIGHT 15
-#define CONSOLE_WIDTH 40
+#define CONSOLE_HEIGHT 10
+#define CONSOLE_WIDTH 10
 
 enum MAP_TILES { WALL = '#', EMPTY = ' ', PUNTOS = '.' };
-
 MAP_TILES mapa[CONSOLE_HEIGHT][CONSOLE_WIDTH];
 
 enum USER_INPUT { NONE, UP, DOWN, RIGHT, LEFT, QUIT };
@@ -15,8 +16,8 @@ char player = 'O';
 USER_INPUT input = USER_INPUT::NONE;
 bool run = true;
 
-int player_x = 19;
-int player_y = 14;
+int player_x = 5;
+int player_y = 5;
 
 int mapa_puntos = 0;
 int player_puntos = 0;
@@ -31,23 +32,30 @@ void Inicializar() {
 			{
 				mapa[i][j] = MAP_TILES::WALL;
 
+				//mapa[0][0]= MAP_TILES::WALL;
+				//mapa[1][0] = MAP_TILES::WALL;
 			}
-
-			else if (i == 6 || i == CONSOLE_HEIGHT - 6 || j == 14 || j == CONSOLE_WIDTH - 11) {
-				mapa[i][j] = MAP_TILES::PUNTOS;
 
 				mapa_puntos++;
 			}
 			else {
 				//else if (i == 3 || i == CONSOLE_HEIGHT - 3 || j == 4 || j == CONSOLE_WIDTH - 5) {
 				mapa[i][j] = MAP_TILES::EMPTY;
-
+				mapa[4][0] = MAP_TILES::EMPTY;
+				mapa[5][0] = MAP_TILES::EMPTY;
+				mapa[4][9] = MAP_TILES::EMPTY;
+				mapa[5][9] = MAP_TILES::EMPTY;
+				mapa[0][4] = MAP_TILES::EMPTY;
+				mapa[0][5] = MAP_TILES::EMPTY;
+				mapa[9][4] = MAP_TILES::EMPTY;
+				mapa[9][5] = MAP_TILES::EMPTY;
 
 
 			}
 
 		}
 	}
+
 
 	//PARED IZQUIERDA
 	mapa[6][0] = MAP_TILES::EMPTY;
@@ -163,6 +171,7 @@ void Inicializar() {
 	mapa[5][20] = MAP_TILES::WALL;
 	mapa[4][20] = MAP_TILES::WALL;
 
+
 }
 void Input() {
 
@@ -197,11 +206,23 @@ void Input() {
 	}
 }
 
+
+//int keypress() {
+//	system("/bin/stty raw");
+//	int c;
+//	system("/bin/stty -echo");
+//	c = getc(stdin);
+//	Input();
+//	system("/bin/stty echo");
+//	system("/bin/stty cooked");
+//	return c;
+//}
+
+
+
 void logic() {
 	int newPos_y = player_y;
 	int newPos_x = player_x;
-
-
 	switch (input)
 	{
 	case UP:
@@ -220,20 +241,6 @@ void logic() {
 		run = false;
 		break;
 	}
-
-
-	//volver al otro lado de la pantalla cuando cruzas un limite
-	if (newPos_y < 0) {
-		newPos_y = CONSOLE_HEIGHT - 1;
-	}
-
-	if (newPos_x < 0) {
-		newPos_x = CONSOLE_WIDTH - 1;
-	}
-
-	newPos_y %= CONSOLE_HEIGHT;
-	newPos_x %= CONSOLE_WIDTH;
-
 	if (mapa[newPos_y][newPos_x] == MAP_TILES::WALL)
 	{
 		newPos_y = player_y;
@@ -244,10 +251,17 @@ void logic() {
 		player_puntos++;
 		mapa[newPos_y][newPos_x] = MAP_TILES::EMPTY;
 	}
-
-	player_x = newPos_x;
-
+	// volver al otro lado de la pantalla cuando cruzas un limite
+	if (newPos_y < 0) {
+		newPos_y = CONSOLE_HEIGHT - 1;
+	}
+	if (newPos_x < 0) {
+		newPos_x = CONSOLE_WIDTH - 1;
+	}
+	newPos_y %= CONSOLE_HEIGHT;
+	newPos_x %= CONSOLE_WIDTH;
 	player_y = newPos_y;
+	player_x = newPos_x;
 
 	if (mapa_puntos <= 0)
 	{
@@ -274,6 +288,15 @@ void Draw() {
 		}
 		cout << endl;
 	}
+
+
+	HANDLE  hConsole;
+	int k = 120;
+
+	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, k);
+
+
 	//system("Color DE");
 
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE);
@@ -286,10 +309,18 @@ void Draw() {
 int main()
 {
 	Inicializar();
+
+
+	/*do {
+		int key = keypress();
+		std::cout << key << "\n";
+	}*/
+
 	while (run)
 	{
 		Input();
 		logic();
 		Draw();
 	}
+
 }
